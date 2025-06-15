@@ -25,14 +25,16 @@ python -m venv venv
 ```
 ### 2. Install Dependencies
 masuk ke virtual environtment:
+
 windows:
-    ```
-    venv\Scripts\activate
-    ```
+```bash
+venv\Scripts\activate
+```
+
 linux/macOs:
-    ```
-    venv/bin/activate
-    ```
+```bash
+venv/bin/activate
+```
 
 Install dependencies:
 ```bash
