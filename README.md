@@ -113,17 +113,18 @@ Upload dan classify image
 
 ## Waste Categories
 
-| Category | Color | Description |
-|----------|-------|-------------|
-| Cardboard | #8B4513 | Cardboard boxes, packaging |
-| Food Organics | #228B22 | Food waste, organic materials |
-| Glass | #00CED1 | Glass bottles, containers |
-| Metal | #C0C0C0 | Metal cans, containers |
-| Miscellaneous Trash | #696969 | Mixed waste materials |
-| Paper | #F5F5DC | Paper documents, newspapers |
-| Plastic | #FF6347 | Plastic bottles, containers |
-| Textile Trash | #9370DB | Clothing, fabric materials |
-| Vegetation | #32CD32 | Plant matter, garden waste |
+| Category           | Color                                                   | Description                    |
+|--------------------|----------------------------------------------------------|--------------------------------|
+| Cardboard          | <span style="background-color:#8B4513;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#8B4513` | Cardboard boxes, packaging     |
+| Food Organics      | <span style="background-color:#228B22;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#228B22` | Food waste, organic materials  |
+| Glass              | <span style="background-color:#00CED1;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#00CED1` | Glass bottles, containers      |
+| Metal              | <span style="background-color:#C0C0C0;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#C0C0C0` | Metal cans, containers         |
+| Miscellaneous Trash| <span style="background-color:#696969;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#696969` | Mixed waste materials          |
+| Paper              | <span style="background-color:#F5F5DC;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#F5F5DC` | Paper documents, newspapers    |
+| Plastic            | <span style="background-color:#FF6347;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#FF6347` | Plastic bottles, containers    |
+| Textile Trash      | <span style="background-color:#9370DB;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#9370DB` | Clothing, fabric materials     |
+| Vegetation         | <span style="background-color:#32CD32;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#32CD32` | Plant matter, garden waste     |
+
 
 ## Customization
 
