@@ -113,17 +113,18 @@ Upload dan classify image
 
 ## Waste Categories
 
-| Category           | Color                                                   | Description                    |
-|--------------------|----------------------------------------------------------|--------------------------------|
-| Cardboard          | <span style="background-color:#8B4513;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#8B4513` | Cardboard boxes, packaging     |
-| Food Organics      | <span style="background-color:#228B22;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#228B22` | Food waste, organic materials  |
-| Glass              | <span style="background-color:#00CED1;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#00CED1` | Glass bottles, containers      |
-| Metal              | <span style="background-color:#C0C0C0;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#C0C0C0` | Metal cans, containers         |
-| Miscellaneous Trash| <span style="background-color:#696969;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#696969` | Mixed waste materials          |
-| Paper              | <span style="background-color:#F5F5DC;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#F5F5DC` | Paper documents, newspapers    |
-| Plastic            | <span style="background-color:#FF6347;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#FF6347` | Plastic bottles, containers    |
-| Textile Trash      | <span style="background-color:#9370DB;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#9370DB` | Clothing, fabric materials     |
-| Vegetation         | <span style="background-color:#32CD32;">&nbsp;&nbsp;&nbsp;&nbsp;</span> `#32CD32` | Plant matter, garden waste     |
+| Category            | Color                                                                 | Description                    |
+|---------------------|------------------------------------------------------------------------|--------------------------------|
+| Cardboard           | <span style="display:inline-block;width:20px;height:20px;background:#8B4513;border-radius:4px;"></span> `#8B4513` | Cardboard boxes, packaging     |
+| Food Organics       | <span style="display:inline-block;width:20px;height:20px;background:#228B22;border-radius:4px;"></span> `#228B22` | Food waste, organic materials  |
+| Glass               | <span style="display:inline-block;width:20px;height:20px;background:#00CED1;border-radius:4px;"></span> `#00CED1` | Glass bottles, containers      |
+| Metal               | <span style="display:inline-block;width:20px;height:20px;background:#C0C0C0;border-radius:4px;"></span> `#C0C0C0` | Metal cans, containers         |
+| Miscellaneous Trash | <span style="display:inline-block;width:20px;height:20px;background:#696969;border-radius:4px;"></span> `#696969` | Mixed waste materials          |
+| Paper               | <span style="display:inline-block;width:20px;height:20px;background:#F5F5DC;border-radius:4px;"></span> `#F5F5DC` | Paper documents, newspapers    |
+| Plastic             | <span style="display:inline-block;width:20px;height:20px;background:#FF6347;border-radius:4px;"></span> `#FF6347` | Plastic bottles, containers    |
+| Textile Trash       | <span style="display:inline-block;width:20px;height:20px;background:#9370DB;border-radius:4px;"></span> `#9370DB` | Clothing, fabric materials     |
+| Vegetation          | <span style="display:inline-block;width:20px;height:20px;background:#32CD32;border-radius:4px;"></span> `#32CD32` | Plant matter, garden waste     |
+
 
 
 ## Customization
