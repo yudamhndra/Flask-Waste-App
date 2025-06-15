@@ -1,0 +1,494 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Classification System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            background: #f8f9ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            background: #f0f2ff;
+            border-color: #5a67d8;
+        }
+
+        .upload-area.dragover {
+            background: #e6f3ff;
+            border-color: #00CED1;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .result-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .prediction-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .main-prediction {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .predicted-class {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .confidence {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .all-predictions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .all-predictions h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .prediction-item:last-child {
+            border-bottom: none;
+        }
+
+        .prediction-bar {
+            background: #e0e7ff;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100px;
+            margin-left: 10px;
+        }
+
+        .prediction-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .error {
+            background: #fee;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #fc8181;
+        }
+
+        .waste-categories {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .category-item {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .category-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .prediction-info {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗂️ Waste Classification System</h1>
+            <p>Upload an image to classify waste type using AI</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Drag & Drop your image here</div>
+            <div class="upload-subtext">or click to browse (PNG, JPG, JPEG, GIF, BMP)</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div style="text-align: center;">
+            <button class="btn" id="uploadBtn">Choose Image</button>
+            <button class="btn" id="predictBtn" disabled>Classify Waste</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing image... Please wait</p>
+        </div>
+
+        <div class="result" id="result">
+            <div class="result-image">
+                <img id="resultImage" src="" alt="Classification Result">
+            </div>
+            
+            <div class="prediction-info">
+                <div class="main-prediction">
+                    <div class="predicted-class" id="predictedClass"></div>
+                    <div class="confidence" id="confidence"></div>
+                </div>
+                
+                <div class="all-predictions">
+                    <h3>All Predictions</h3>
+                    <div id="allPredictions"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="waste-categories">
+            <h3 style="grid-column: 1 / -1; text-align: center; margin-bottom: 20px; color: #333;">Waste Categories</h3>
+            <div class="category-item">
+                <div class="category-color" style="background: #8B4513;"></div>
+                <div>Cardboard</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #228B22;"></div>
+                <div>Food Organics</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #00CED1;"></div>
+                <div>Glass</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #C0C0C0;"></div>
+                <div>Metal</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #696969;"></div>
+                <div>Miscellaneous Trash</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #F5F5DC;"></div>
+                <div>Paper</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #FF6347;"></div>
+                <div>Plastic</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #9370DB;"></div>
+                <div>Textile Trash</div>
+            </div>
+            <div class="category-item">
+                <div class="category-color" style="background: #32CD32;"></div>
+                <div>Vegetation</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const predictBtn = document.getElementById('predictBtn');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const resultImage = document.getElementById('resultImage');
+        const predictedClass = document.getElementById('predictedClass');
+        const confidence = document.getElementById('confidence');
+        const allPredictions = document.getElementById('allPredictions');
+
+        let selectedFile = null;
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleDrop);
+        fileInput.addEventListener('change', handleFileSelect);
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        predictBtn.addEventListener('click', handlePredict);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect({ target: { files: files } });
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                selectedFile = file;
+                predictBtn.disabled = false;
+                uploadArea.innerHTML = `
+                    <div class="upload-icon">✅</div>
+                    <div class="upload-text">Image selected: ${file.name}</div>
+                    <div class="upload-subtext">Click "Classify Waste" to analyze</div>
+                `;
+                result.style.display = 'none';
+            } else {
+                showError('Please select a valid image file');
+            }
+        }
+
+        async function handlePredict() {
+            if (!selectedFile) return;
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            predictBtn.disabled = true;
+            loading.style.display = 'block';
+            result.style.display = 'none';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayResult(data);
+                } else {
+                    showError(data.error || 'Prediction failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+                predictBtn.disabled = false;
+            }
+        }
+
+        function displayResult(data) {
+            resultImage.src = `/static/${data.result_image}`;
+            predictedClass.textContent = data.predicted_class;
+            predictedClass.style.color = data.color;
+            confidence.textContent = `${data.confidence.toFixed(1)}%`;
+
+            // Display all predictions
+            allPredictions.innerHTML = '';
+            Object.entries(data.all_predictions)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([label, prob]) => {
+                    const item = document.createElement('div');
+                    item.className = 'prediction-item';
+                    item.innerHTML = `
+                        <span>${label}</span>
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 10px;">${prob.toFixed(1)}%</span>
+                            <div class="prediction-bar">
+                                <div class="prediction-fill" style="width: ${prob}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    allPredictions.appendChild(item);
+                });
+
+            result.style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            
+            // Remove existing errors
+            const existingError = document.querySelector('.error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Add new error
+            document.querySelector('.container').appendChild(errorDiv);
+            
+            // Remove error after 5 seconds
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+    </script>
+</body>
